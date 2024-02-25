@@ -22,11 +22,6 @@ type GetPackagesResponse struct {
 	} `json:"results"`
 }
 
-type JsonRPCRequest struct {
-	Method string   `json:"method"`
-	Params []string `json:"parameters"`
-}
-
 type JsonRPCAction struct {
 	Method string   `json:"method,omitempty"`
 	Params []string `json:"parameters,omitempty"`
@@ -53,7 +48,7 @@ const API_URL = "https://api.npms.io/v2/search"
 func main() {
 	jsonrpc := os.Args[len(os.Args)-1]
 
-	var request JsonRPCRequest
+	var request JsonRPCAction
 	err := json.Unmarshal([]byte(jsonrpc), &request)
 	check(err, "Error parsing request")
 
