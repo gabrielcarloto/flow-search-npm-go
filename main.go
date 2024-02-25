@@ -31,7 +31,7 @@ type Result struct {
 	Title         string `json:"Title"`
 	Subtitle      string `json:"Subtitle,omitempty"`
 	JsonRPCAction `json:"JsonRPCAction"`
-	IcoPath       string `json:"IcoPath"`
+	IcoPath       string `json:"IcoPath"` 
 }
 
 type JsonRPCResponse struct {
@@ -62,7 +62,7 @@ func main() {
 
 func methodQuery(query string) {
 	if query == "" {
-		sendResult(Result{Title: "Waiting for query...", Subtitle: "Hello from go!"})
+		sendResult(Result{Title: "Waiting for query...", IcoPath: "app.png"})
     return
 	}
 
