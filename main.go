@@ -19,7 +19,7 @@ type GetPackagesResponse struct {
 				Npm string `json:"npm"`
 			} `json:"links"`
 		} `json:"package"`
-	} `json:"results"`
+	} `json:"objects"`
 }
 
 type JsonRPCAction struct {
@@ -43,7 +43,7 @@ const (
 	Open  = "open"
 )
 
-const API_URL = "https://api.npms.io/v2/search"
+const API_URL = "https://registry.npmjs.com/-/v1/search"
 
 func main() {
 	jsonrpc := os.Args[len(os.Args)-1]
@@ -78,7 +78,7 @@ func methodOpen(url string) {
 }
 
 func queryPackage(query string) (*GetPackagesResponse, error) {
-	res, err := http.Get(API_URL + "?q=" + query)
+	res, err := http.Get(API_URL + "?text=" + query)
 	check(err, "Error querying packages")
 
 	if res.StatusCode != 200 {
