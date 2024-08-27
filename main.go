@@ -3,10 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/pkg/browser"
 	"io"
 	"net/http"
 	"os"
-	"github.com/pkg/browser"
 )
 
 type GetPackagesResponse struct {
@@ -31,7 +31,7 @@ type Result struct {
 	Title         string `json:"Title"`
 	Subtitle      string `json:"Subtitle,omitempty"`
 	JsonRPCAction `json:"JsonRPCAction"`
-	IcoPath       string `json:"IcoPath"` 
+	IcoPath       string `json:"IcoPath"`
 }
 
 type JsonRPCResponse struct {
@@ -55,26 +55,26 @@ func main() {
 	switch request.Method {
 	case Query:
 		methodQuery(request.Params[0])
-  case Open:
-    methodOpen(request.Params[0])
+	case Open:
+		methodOpen(request.Params[0])
 	}
 }
 
 func methodQuery(query string) {
 	if query == "" {
 		sendResult(Result{Title: "Waiting for query...", IcoPath: "app.png"})
-    return
+		return
 	}
 
 	packages, err := queryPackage(query)
 	check(err, "Error querying package")
 
 	results := mapPackagesToResults(packages)
-  sendResults(results)
+	sendResults(results)
 }
 
 func methodOpen(url string) {
-  browser.OpenURL(url)
+	browser.OpenURL(url)
 }
 
 func queryPackage(query string) (*GetPackagesResponse, error) {
@@ -106,11 +106,11 @@ func mapPackagesToResults(packs *GetPackagesResponse) []Result {
 			Title:         v.Package.Name + " | v" + v.Package.Version,
 			Subtitle:      v.Package.Description,
 			JsonRPCAction: action,
-      IcoPath: "app.png",
-    }
+			IcoPath:       "app.png",
+		}
 	}
 
-  return mapped
+	return mapped
 }
 
 func sendResult(result Result) {
